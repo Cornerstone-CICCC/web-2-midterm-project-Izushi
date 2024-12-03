@@ -19,20 +19,19 @@ interface Movies {
 
 const App:React.FC = () => {
   const [movies, setMovies] = useState<Movies[]>([]);
-  const [query, setQuery] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<Movies[]>([])
 
   const apiKey = "0a8d1904066c27fb5552becee7441627";
   const trendingEndPoint = `https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}&include_adult=false`;
-  const searchTrendingEndPoint = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&include_adult=false&query=`;
 
   useEffect(() => {
     fetchData(trendingEndPoint);
   }, []);
 
 
-  const fetchData = (endPoint: string, query: string = '') => {
+  const fetchData = (endPoint: string) => {
     axios
-      .get(endPoint + query)
+      .get(endPoint)
       .then((res) => {
         const result = res.data.results;
         console.log(result);
@@ -41,19 +40,15 @@ const App:React.FC = () => {
       .catch(err => console.error(err));
   }
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-  }
-
-  const handleSearch = () => {
-    fetchData(searchTrendingEndPoint, query);
+  const handleSearchResults = (results: Movies[]) => {
+    setSearchResults(results);
   }
 
   return (
     <BrowserRouter>
-      <Header query={query} onInputChange={handleInputChange} onSearch={handleSearch} />
+      <Header onSearchResults={handleSearchResults} />
       <Routes>
-        <Route path="/" element={<Home movies={movies} />} />
+        <Route path="/" element={<Home movies={searchResults.length > 0 ? searchResults : movies} />} />
         <Route path="/about" element={<About />} />
       </Routes>
       <Footer />

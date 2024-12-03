@@ -1,14 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 import './Header.css';
+import axios from 'axios';
 
 interface HeaderProps {
-  query: string;
-  onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSearch: () => void;
+  onSearchResults: (movies: []) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ query, onInputChange, onSearch }) => {
+const Header: React.FC<HeaderProps> = ({ onSearchResults }) => {
+  const [query, setQuery] = useState<string>('');
+
+  const apiKey = "0a8d1904066c27fb5552becee7441627";
+  const searchTrendingEndPoint = `https://api.themoviedb.org/3/search/movie?include_adult=false`;
+
+
+  const fetchSearchedData = () => {
+    axios
+      .get(`${searchTrendingEndPoint}&query=${query}&api_key=${apiKey}`)
+      .then((res) => {
+        const results = res.data.results;
+        onSearchResults(results);
+      })
+      .catch(err => console.error(err));
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+  }
+
   return (
     <header className="header-container">
       <h1 className="header-title">Movie App</h1>
@@ -22,9 +41,9 @@ const Header: React.FC<HeaderProps> = ({ query, onInputChange, onSearch }) => {
           placeholder='Search Movies'
           className="search-input"
           value={query}
-          onChange={onInputChange}
+          onChange={handleInputChange}
         />
-        <button onClick={onSearch} className='search-button'>Search</button>
+        <button onClick={fetchSearchedData} className='search-button'>Search</button>
       </div>
     </header>
   )
