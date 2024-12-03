@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import Modal from '../../components/Modal/Modal';
+import './Home.css'
 
 interface Movies {
   id: number;

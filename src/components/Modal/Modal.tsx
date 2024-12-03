@@ -16,7 +16,7 @@ const Modal: React.FC<ModalProps> = ({ movie, isOpen, onClose }) => {
         <button
           className="modal-close"
           onClick={onClose}
-        >Close</button>
+        >×</button>
         <h2>{movie.title}</h2>
         <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt="" />
         <p>{movie.overview}</p>
