@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 import Header from './components/Header/Header';
 import Home from './pages/Home/Home';
+import About from './pages/About/About';
 import './App.css';
 
 interface Movies {
@@ -52,6 +53,7 @@ const App:React.FC = () => {
       <Header query={query} onInputChange={handleInputChange} onSearch={handleSearch} />
       <Routes>
         <Route path="/" element={<Home movies={movies} />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </BrowserRouter>
   );
