@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Router, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 import Header from './components/Header/Header';
+import Home from './pages/Home/Home';
 import './App.css';
 
 interface Movies {
@@ -49,21 +50,9 @@ const App:React.FC = () => {
   return (
     <BrowserRouter>
       <Header query={query} onInputChange={handleInputChange} onSearch={handleSearch} />
-      <div className="App">
-        <div className="movies">
-          {movies.map((movie) => {
-            return (
-              <div key={movie.id} className="movie">
-                <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title} />
-                <div className="movie-info">
-                  <h3>{movie.title}</h3>
-                  <span>{movie.vote_average}</span>
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      </div>
+      <Routes>
+        <Route path="/" element={<Home movies={movies} />} />
+      </Routes>
     </BrowserRouter>
   );
 }
