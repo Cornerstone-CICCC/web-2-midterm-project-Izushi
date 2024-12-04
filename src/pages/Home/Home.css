@@ -2,17 +2,39 @@
   padding-top: 15vh;
   display: flex;
   flex-wrap: wrap;
+  background: black;
 }
 
 .movie {
-  margin: 10px;
+  margin: 20px;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 200px;
+  width: 220px;
 
-}
+  .vote-average {
+    position: relative;
 
-.movie-info {
-  width: 200px;
+    svg {
+        position: absolute;
+        top: -20px;
+        right: -23px;
+      }
+
+    p {
+      position: absolute;
+      top: -10px;
+      right: 0px;
+      font-weight: bold;
+    }
+  }
+
+  img {
+    border: 10px solid #494949;
+    border-radius: 30px;
+  }
+
+  .movie-info {
+    color: white;
+    width: 200px;
+    text-align: center;
+  }
 }

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import StarIcon from '@mui/icons-material/Star';
 import Modal from '../../components/Modal/Modal';
 import './Home.css'
 
@@ -64,10 +65,15 @@ const Home: React.FC<HomeProps> = ({ movies }) => {
             className="movie"
             onClick={() => handleMovieClick(movie.id)}
           >
+            <div className='vote-average'>
+              <StarIcon
+                style={{ color: movie.vote_average >= 7 ? 'yellow' : '#ccc', fontSize: '70px' }}
+              ></StarIcon>
+              <p>{typeof movie.vote_average === 'number' ? (movie.vote_average === 10 ? '10' : movie.vote_average.toFixed(1)) : 'N/A'}</p>
+            </div>
             <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title} />
             <div className="movie-info">
               <h3>{movie.title}</h3>
-              <span>{movie.vote_average}</span>
             </div>
           </div>
         )

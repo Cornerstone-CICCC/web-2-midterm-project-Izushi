@@ -11,7 +11,7 @@ const Header: React.FC<HeaderProps> = ({ onSearchResults }) => {
   const [query, setQuery] = useState<string>('');
 
   const apiKey = "0a8d1904066c27fb5552becee7441627";
-  const searchTrendingEndPoint = `https://api.themoviedb.org/3/search/movie?include_adult=false`;
+  const searchTrendingEndPoint = `https://api.themoviedb.org/3/search/multi?include_adult=false`;
 
 
   const fetchSearchedData = () => {
@@ -31,10 +31,6 @@ const Header: React.FC<HeaderProps> = ({ onSearchResults }) => {
   return (
     <header className="header-container">
       <h1 className="header-title">Movie App</h1>
-      <nav className="nav">
-        <Link to="/" className="nav-link">Home</Link>
-        <Link to="/about" className="nav-link">About</Link>
-      </nav>
       <div className="search-bar">
         <input
           type="text"
@@ -45,6 +41,10 @@ const Header: React.FC<HeaderProps> = ({ onSearchResults }) => {
         />
         <button onClick={fetchSearchedData} className='search-button'>Search</button>
       </div>
+      <nav className="nav">
+        <Link to="/" className="nav-link">Home</Link>
+        <Link to="/about" className="nav-link">About</Link>
+      </nav>
     </header>
   )
 };
