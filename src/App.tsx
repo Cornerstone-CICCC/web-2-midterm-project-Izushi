@@ -1,54 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import axios from 'axios';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Home from './pages/Home/Home';
 import About from './pages/About/About';
 import './App.css';
 
-interface Movies {
-  id: number;
-  title: string;
-  overview: string;
-  poster_path: string;
-  backdrop_path: string;
-  vote_average: number;
-  release_date: string;
+interface Genre {
+  id: number | null;
+  name: string;
 }
 
 const App:React.FC = () => {
-  const [movies, setMovies] = useState<Movies[]>([]);
-  const [searchResults, setSearchResults] = useState<Movies[]>([])
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [genre, setGenre] = useState<Genre>({ id: null, name: '' });
 
-  const apiKey = "0a8d1904066c27fb5552becee7441627";
-  const trendingEndPoint = `https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}&include_adult=false`;
-
-  useEffect(() => {
-    fetchData(trendingEndPoint);
-  }, []);
-
-
-  const fetchData = (endPoint: string) => {
-    axios
-      .get(endPoint)
-      .then((res) => {
-        const result = res.data.results;
-        console.log(result);
-        setMovies(result);
-      })
-      .catch(err => console.error(err));
+  const handleSearchQuery = (query: string) => {
+    setSearchQuery(query);
   }
 
-  const handleSearchResults = (results: Movies[]) => {
-    setSearchResults(results);
+  const handleGenre = (genre: Genre | null) => {
+    if (genre) {
+      setGenre(genre);
+    } else {
+      setGenre({ id: null, name: '' });
+    }
   }
 
   return (
     <BrowserRouter>
-      <Header onSearchResults={handleSearchResults} />
+      <Header onSearchQuery={handleSearchQuery} onGenre={handleGenre} />
       <Routes>
-        <Route path="/" element={<Home movies={searchResults.length > 0 ? searchResults : movies} />} />
+        <Route path="/" element={<Home query={searchQuery} genre={genre}/>} />
         <Route path="/about" element={<About />} />
       </Routes>
       <Footer />

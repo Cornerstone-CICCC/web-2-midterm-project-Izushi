@@ -1,8 +1,8 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import StarIcon from '@mui/icons-material/Star';
 import Modal from '../../components/Modal/Modal';
-import './Home.css'
+import './Home.css';
 
 interface Movies {
   id: number;
@@ -24,16 +24,54 @@ interface Movie {
   release_date: string;
 }
 
-interface HomeProps {
-  movies: Movies[];
+interface Genre {
+  id: number | null;
+  name: string;
 }
 
-const Home: React.FC<HomeProps> = ({ movies }) => {
+interface HomeProps {
+  query: string;
+  genre: Genre;
+}
+
+const Home: React.FC<HomeProps> = ({ query, genre }) => {
+  const [genreName, setGenreName] = useState<string>('');
+  const [movies, setMovies] = useState<Movies[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const aipKey = "0a8d1904066c27fb5552becee7441627";
   const detailEndPoint = "https://api.themoviedb.org/3/movie/";
+  const trendingEndPoint = `https://api.themoviedb.org/3/trending/movie/day?include_adult=false`;
+  const searchTrendingEndPoint = `https://api.themoviedb.org/3/search/multi?include_adult=false&query=`;
+  const moviesByGenreEndPoint = `https://api.themoviedb.org/3/discover/movie?include_adult=false&with_genres=`;
+
+  useEffect(() => {
+    if (query) {
+      console.log(searchTrendingEndPoint + query);
+      fetchData(searchTrendingEndPoint + query);
+      setGenreName(`Search result of "${query}"`);
+    } else if (genre.id) {
+      console.log(moviesByGenreEndPoint + genre.id)
+      fetchData(moviesByGenreEndPoint + genre.id);
+      setGenreName(genre.name);
+    } else {
+      fetchData(trendingEndPoint);
+      setGenreName('Trending');
+    }
+  }, [query, genre, moviesByGenreEndPoint, searchTrendingEndPoint, trendingEndPoint]);
+
+
+  const fetchData = (endPoint: string) => {
+    axios
+      .get(`${endPoint}&api_key=${aipKey}`)
+      .then((res) => {
+        const result = res.data.results;
+        console.log(result);
+        setMovies(result);
+      })
+      .catch(err => console.error(err));
+  }
 
   const fetchMovieDetails = (id: number) => {
     axios
@@ -57,27 +95,31 @@ const Home: React.FC<HomeProps> = ({ movies }) => {
   }
 
   return (
-    <div className="movies">
-      {movies.map((movie) => {
-        return (
-          <div
-            key={movie.id}
-            className="movie"
-            onClick={() => handleMovieClick(movie.id)}
-          >
-            <div className='vote-average'>
-              <StarIcon
-                style={{ color: movie.vote_average >= 7 ? 'yellow' : '#ccc', fontSize: '70px' }}
-              ></StarIcon>
-              <p>{typeof movie.vote_average === 'number' ? (movie.vote_average === 10 ? '10' : movie.vote_average.toFixed(1)) : 'N/A'}</p>
+    <div className="movies-container">
+      <h2 className='genre-name'>{genreName}</h2>
+      <div className="movies">
+        {movies.map((movie) => {
+          if (!movie.poster_path) return null;
+          return (
+            <div
+              key={movie.id}
+              className="movie"
+              onClick={() => handleMovieClick(movie.id)}
+            >
+              <div className='vote-average'>
+                <StarIcon
+                  style={{ color: movie.vote_average >= 7 ? 'yellow' : '#ccc', fontSize: '70px' }}
+                ></StarIcon>
+                <p>{typeof movie.vote_average === 'number' ? (movie.vote_average === 10 ? '10' : movie.vote_average.toFixed(1)) : 'N/A'}</p>
+              </div>
+              <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title} />
+              <div className="movie-info">
+                <h3>{movie.title}</h3>
+              </div>
             </div>
-            <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title} />
-            <div className="movie-info">
-              <h3>{movie.title}</h3>
-            </div>
-          </div>
-        )
-      })}
+          )
+        })}
+      </div>
       {selectedMovie && (
         <Modal movie={selectedMovie} onClose={closeModal} isOpen={isModalOpen} />
       )}
