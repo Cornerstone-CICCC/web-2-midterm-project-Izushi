@@ -12,13 +12,57 @@
 
   .modal-content {
     position: relative;
-    background: white;
+    background: black;
     padding: 2rem;
     border-radius: 8px;
-    max-width: 500px;
-    width: 100%;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    color: #bbbbbb;
+
+    .video-container {
+      display: flex;
+      justify-content: center;
+      width: 1000px;
+      overflow: hidden;
+      height: 540px;
+      margin: 0 auto;
+
+      iframe {
+        margin: 0 auto;
+        width: 1200px;
+        height: 700px;
+        margin-top: -85px;
+      }
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #444;
+      padding-bottom: 0.5rem;
+      color: rgb(228, 226, 226);
+    }
+
+    .overview {
+      font-size: 1.2rem;
+      margin: 1rem 0;
+      line-height: 1.6;
+    }
+
+    .release-date, .rating {
+      font-size: 1rem;
+      margin: 0.5rem 0;
+    }
+
+    .rating span {
+      margin-left: 0.5rem;
+      font-size: 1.2rem;
+      color: #ffcc00;
+    }
 
     .modal-close {
+      color: white;
       position: absolute;
       top: 10px;
       right: 10px;

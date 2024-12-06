@@ -38,6 +38,7 @@ const Home: React.FC<HomeProps> = ({ query, genre }) => {
   const [genreName, setGenreName] = useState<string>('');
   const [movies, setMovies] = useState<Movies[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+  const [videoKey, setVideoKey] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const aipKey = "0a8d1904066c27fb5552becee7441627";
@@ -80,7 +81,20 @@ const Home: React.FC<HomeProps> = ({ query, genre }) => {
         const result = res.data;
         console.log(result);
         setSelectedMovie(result);
+        fetchMovieVideo(id);
         setIsModalOpen(true);
+      })
+      .catch(err => console.error(err));
+  }
+
+  const fetchMovieVideo = (id: number) => {
+    axios
+      .get(`${detailEndPoint}${id}/videos?api_key=${aipKey}`)
+      .then((res) => {
+        const videos = res.data.results;
+        console.log(videos);
+        const trailer = videos.find((video: any) => video.type === 'Trailer');
+        if (trailer) setVideoKey(trailer.key)
       })
       .catch(err => console.error(err));
   }
@@ -121,7 +135,7 @@ const Home: React.FC<HomeProps> = ({ query, genre }) => {
         })}
       </div>
       {selectedMovie && (
-        <Modal movie={selectedMovie} onClose={closeModal} isOpen={isModalOpen} />
+        <Modal movie={selectedMovie} onClose={closeModal} isOpen={isModalOpen} videoKey={videoKey} />
       )}
     </div>
   )

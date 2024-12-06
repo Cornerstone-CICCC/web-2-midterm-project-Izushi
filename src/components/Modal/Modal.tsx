@@ -5,9 +5,10 @@ interface ModalProps {
   movie: any;
   isOpen: boolean;
   onClose: () => void;
+  videoKey: string | null;
 }
 
-const Modal: React.FC<ModalProps> = ({ movie, isOpen, onClose }) => {
+const Modal: React.FC<ModalProps> = ({ movie, isOpen, onClose, videoKey }) => {
   if (!isOpen) return null;
 
   return (
@@ -17,11 +18,21 @@ const Modal: React.FC<ModalProps> = ({ movie, isOpen, onClose }) => {
           className="modal-close"
           onClick={onClose}
         >×</button>
+        {videoKey && (
+          <div className="video-container">
+            <iframe
+              src={`https://www.youtube.com/embed/${videoKey}?autoplay=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3&fs=0`}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              title="Movie Trailer"
+            ></iframe>
+          </div>
+        )}
         <h2>{movie.title}</h2>
-        <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt="" />
-        <p>{movie.overview}</p>
-        <p>Release Date: {movie.release_date}</p>
-        <p>Rating: {movie.vote_average}</p>
+        <p className='overview'>{movie.overview}</p>
+        <p className='release-date'>Release Date: {movie.release_date}</p>
+        <p className='rating'>Rating: <span>{movie.vote_average}</span></p>
       </div>
     </div>
   );
