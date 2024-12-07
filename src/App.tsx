@@ -28,14 +28,16 @@ const App:React.FC = () => {
   }
 
   return (
-    <BrowserRouter>
-      <Header onSearchQuery={handleSearchQuery} onGenre={handleGenre} />
-      <Routes>
-        <Route path="/" element={<Home query={searchQuery} genre={genre}/>} />
-        <Route path="/about" element={<About />} />
-      </Routes>
-      <Footer />
-    </BrowserRouter>
+    <div className="App">
+      <BrowserRouter>
+        <Header onSearchQuery={handleSearchQuery} onGenre={handleGenre} />
+        <Routes>
+          <Route path="/" element={<Home query={searchQuery} genre={genre}/>} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </div>
   );
 }
 
