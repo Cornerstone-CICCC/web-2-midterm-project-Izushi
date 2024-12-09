@@ -35,7 +35,7 @@
         margin: 0 auto;
         width: 1200px;
         height: 700px;
-        margin-top: -145px;
+        margin-top: -130px;
       }
     }
 
@@ -87,18 +87,6 @@
 
   h2 {
     color: black;
-  }
-}
-
-@media (max-width: 1200px) {
-  .modal-content {
-    .video-container {
-      height: 400px !important;
-
-      iframe {
-        margin-top: -150px !important;
-      }
-    }
   }
 }
 

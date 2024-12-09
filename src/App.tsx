@@ -38,7 +38,7 @@ const App:React.FC = () => {
         <Header onSearchQuery={handleSearchQuery} onGenre={handleGenre} onToggleClass={handleToggleClass} />
         <Routes>
           <Route path="/" element={<Home query={searchQuery} genre={genre} isDarkMode={isDarkMode} />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/about" element={<About isDarkMode={isDarkMode} />} />
         </Routes>
         <Footer isDarkMode={isDarkMode} />
       </BrowserRouter>
