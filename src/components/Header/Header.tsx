@@ -5,6 +5,7 @@ import axios from 'axios';
 import MenuIcon from '@mui/icons-material/Menu';
 import ToggleOffIcon from '@mui/icons-material/ToggleOff';
 import ToggleOnIcon from '@mui/icons-material/ToggleOn';
+import SearchIcon from '@mui/icons-material/Search';
 
 interface Genre {
   id: number;
@@ -71,11 +72,18 @@ const Header: React.FC<HeaderProps> = ({ onSearchQuery, onGenre, onToggleClass }
 
   return (
     <header className={`header-container ${isDarkMode ? 'dark' : 'light'}`}>
-      <div className="title-container">
-        <div className="menu-icon" onClick={toggleMenu}>
-          <MenuIcon style={{ fontSize: 50 }} />
+      <div className="title-toggle-container">
+        <div className="title-container">
+          <div className="menu-icon" onClick={toggleMenu}>
+            <MenuIcon style={{ fontSize: 50 }} />
+          </div>
+          <h1 className="header-title">Movie App</h1>
         </div>
-        <h1 className="header-title">Movie App</h1>
+        <div className="toggle-container" onClick={changeMode}>
+          {
+            isDarkMode ? <ToggleOnIcon style={{ fontSize: 60 }} /> : <ToggleOffIcon style={{ fontSize: 60 }} />
+          }
+        </div>
       </div>
       <div className="search-bar">
         <input
@@ -85,12 +93,9 @@ const Header: React.FC<HeaderProps> = ({ onSearchQuery, onGenre, onToggleClass }
           value={query}
           onChange={handleInputChange}
         />
-        <button onClick={handleSubmit} className='search-button'>Search</button>
-      </div>
-      <div className="toggle-container" onClick={changeMode}>
-        {
-          isDarkMode ? <ToggleOnIcon style={{ fontSize: 60 }} /> : <ToggleOffIcon style={{ fontSize: 60 }} />
-        }
+        <div className="search-icon" onClick={handleSubmit} style={{ cursor: 'pointer' }} >
+          <SearchIcon style={{ fontSize: 40 }} />
+        </div>
       </div>
       {isMenuOpen && (
         <div className="side-menu">
