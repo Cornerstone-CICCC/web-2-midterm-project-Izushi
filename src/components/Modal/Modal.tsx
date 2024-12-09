@@ -6,14 +6,15 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   videoKey: string | null;
+  isDarkMode: boolean;
 }
 
-const Modal: React.FC<ModalProps> = ({ movie, isOpen, onClose, videoKey }) => {
+const Modal: React.FC<ModalProps> = ({ movie, isOpen, onClose, videoKey, isDarkMode }) => {
   if (!isOpen) return null;
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
+      <div className={`modal-content ${isDarkMode ? 'dark' : 'light'}`}>
         <button
           className="modal-close"
           onClick={onClose}

@@ -73,3 +73,16 @@
     }
   }
 }
+
+.modal-content.light {
+  background: white;
+  color: black;
+
+  .modal-close {
+    color: black;
+  }
+
+  h2 {
+    color: black;
+  }
+}

@@ -137,3 +137,18 @@
     }
   }
 }
+
+.header-container.light {
+  background: white;
+  color: black;
+
+  .menu-icon {
+    color: black;
+  }
+
+  .search-bar {
+    input {
+      border: solid;
+    }
+  }
+}

@@ -1,15 +1,15 @@
 import React from 'react';
 import './Footer.css';
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  isDarkMode: boolean;
+}
+
+const Footer: React.FC<FooterProps> = ({ isDarkMode }) => {
   return (
-    <footer className="footer-container">
+    <footer className={`footer-container ${isDarkMode ? 'dark' : 'light'}`}>
       <div className="footer-content">
         <p>&copy; Movie App. All rights reserved.</p>
-        <nav className="footer-nav">
-          <a href="/" className="footer-link">Home</a>
-          <a href="/about" className="footer-link">About</a>
-        </nav>
       </div>
     </footer>
   )

@@ -32,9 +32,10 @@ interface Genre {
 interface HomeProps {
   query: string;
   genre: Genre;
+  isDarkMode: boolean;
 }
 
-const Home: React.FC<HomeProps> = ({ query, genre }) => {
+const Home: React.FC<HomeProps> = ({ query, genre, isDarkMode }) => {
   const [genreName, setGenreName] = useState<string>('');
   const [movies, setMovies] = useState<Movies[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
@@ -109,7 +110,7 @@ const Home: React.FC<HomeProps> = ({ query, genre }) => {
   }
 
   return (
-    <div className="movies-container">
+    <div className={`movies-container ${isDarkMode ? 'dark' : 'light'}`}>
       <h2 className='genre-name'>{genreName}</h2>
       <div className="movies">
         {movies.map((movie) => {
@@ -135,7 +136,7 @@ const Home: React.FC<HomeProps> = ({ query, genre }) => {
         })}
       </div>
       {selectedMovie && (
-        <Modal movie={selectedMovie} onClose={closeModal} isOpen={isModalOpen} videoKey={videoKey} />
+        <Modal movie={selectedMovie} onClose={closeModal} isOpen={isModalOpen} videoKey={videoKey} isDarkMode={isDarkMode} />
       )}
     </div>
   )
