@@ -27,10 +27,12 @@
         position: relative;
     
         svg {
-            position: absolute;
-            top: -20px;
-            right: -23px;
-          }
+          position: absolute;
+          top: -20px;
+          right: -23px;
+          stroke: black;
+          stroke-width: 0.5;
+        }
     
         p {
           position: absolute;
@@ -50,6 +52,15 @@
         text-align: center;
       }
     }
+  }
+}
+
+.movies-container.light {
+  background: white;
+  color: black;
+
+  .genre-name {
+    color: black;
   }
 }
 

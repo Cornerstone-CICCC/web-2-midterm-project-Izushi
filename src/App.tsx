@@ -14,6 +14,7 @@ interface Genre {
 const App:React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [genre, setGenre] = useState<Genre>({ id: null, name: '' });
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
 
   const handleSearchQuery = (query: string) => {
     setSearchQuery(query);
@@ -27,15 +28,19 @@ const App:React.FC = () => {
     }
   }
 
+  const handleToggleClass = (isDarkMode: boolean) => {
+    setIsDarkMode(isDarkMode);
+  }
+
   return (
     <div className="App">
       <BrowserRouter>
-        <Header onSearchQuery={handleSearchQuery} onGenre={handleGenre} />
+        <Header onSearchQuery={handleSearchQuery} onGenre={handleGenre} onToggleClass={handleToggleClass} />
         <Routes>
-          <Route path="/" element={<Home query={searchQuery} genre={genre}/>} />
+          <Route path="/" element={<Home query={searchQuery} genre={genre} isDarkMode={isDarkMode} />} />
           <Route path="/about" element={<About />} />
         </Routes>
-        <Footer />
+        <Footer isDarkMode={isDarkMode} />
       </BrowserRouter>
     </div>
   );
