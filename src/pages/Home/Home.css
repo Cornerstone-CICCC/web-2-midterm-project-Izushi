@@ -3,6 +3,7 @@
   background: black;
   color: white;
   text-align: center;
+  transition: background 0.5s ease, color 0.5s ease;
 
   .genre-name {
     font-size: 40px;

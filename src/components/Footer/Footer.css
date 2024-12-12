@@ -2,6 +2,7 @@
   width: 100%;
   background: black;
   color: white;
+  transition: background 0.5s ease, color 0.5s ease;
 
   .footer-content {
     display: flex;
